@@ -1,5 +1,16 @@
 import mongoose, { InferSchemaType, Model } from 'mongoose';
 
+const courseSchema = new mongoose.Schema({
+   _id: {
+      type: mongoose.SchemaTypes.ObjectId,
+      unique: true,
+      auto: true,
+   },
+   name: { type: String, required: true },
+   price: { type: Number, required: true },
+   duration: { type: String, required: true },
+});
+
 export const userSchema = new mongoose.Schema({
    username: { type: String, required: true },
    password: { type: String, required: true },
@@ -102,7 +113,21 @@ export const userSchema = new mongoose.Schema({
          place: { type: String, required: true },
       },
    ],
-
+   courses: [courseSchema],
+   orders: [
+      {
+         _id: {
+            type: mongoose.SchemaTypes.ObjectId,
+            unique: true,
+            auto: true,
+         },
+         name: { type: String, required: true },
+         phone: { type: String, required: true },
+         age: { type: String, required: true },
+         freeTime: { type: String, required: true },
+         course: { type: courseSchema, required: true },
+      },
+   ],
 });
 
 export type UserSchemaType = InferSchemaType<typeof userSchema>;
