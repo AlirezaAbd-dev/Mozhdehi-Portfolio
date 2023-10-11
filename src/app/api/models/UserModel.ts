@@ -66,6 +66,42 @@ export const userSchema = new mongoose.Schema({
          post: { type: String, required: true },
       },
    ],
+   books: [
+      {
+         _id: {
+            type: mongoose.SchemaTypes.ObjectId,
+            unique: true,
+            auto: true,
+         },
+         name: { type: String, required: true },
+         image: { type: String, required: true },
+         reference: { type: String, required: false },
+      },
+   ],
+   articles: [
+      {
+         _id: {
+            type: mongoose.SchemaTypes.ObjectId,
+            unique: true,
+            auto: true,
+         },
+         name: { type: String, required: true },
+         image: { type: String, required: true },
+         reference: { type: String, required: false },
+      },
+   ],
+   schedule: [
+      {
+         _id: {
+            type: mongoose.SchemaTypes.ObjectId,
+            unique: true,
+            auto: true,
+         },
+         name: { type: String, required: true },
+         time: { type: String, required: true },
+         place: { type: String, required: true },
+      },
+   ],
 });
 
 export type UserSchemaType = InferSchemaType<typeof userSchema>;

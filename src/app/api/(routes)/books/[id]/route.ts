@@ -1,34 +1,30 @@
 import { adminAuth } from '@/app/api/auth/auth';
 import dbConnect from '@/app/api/utils/dbConnect';
-import { type NextRequest, NextResponse as res } from 'next/server';
-import workValidation from '../workValidation';
+import { NextRequest, NextResponse as res } from 'next/server';
+import bookValidation from '../bookValidation';
 
 export async function PUT(req: NextRequest) {
    await dbConnect();
 
    const id = req.nextUrl.pathname.split('/')[3];
 
-   const data = await adminAuth<typeof workValidation>(req, workValidation);
+   const data = await adminAuth<typeof bookValidation>(req, bookValidation);
 
    if (data instanceof res) {
       return data;
    }
 
-   const workIndex = data.users[0].works.findIndex(
+   const bookIndex = data.users[0].books.findIndex(
       (e) => e._id?.toString() === id,
    );
 
-   if (workIndex === -1) {
-      return res.json(
-         { message: 'شغل مورد نظر یافت نشد!' },
-         { status: 404 },
-      );
+   if (bookIndex === -1) {
+      return res.json({ message: 'کتاب مورد نظر یافت نشد!' }, { status: 404 });
    }
 
-   data.users[0].works[workIndex] = {
-      company: data.verifiedBody.data.company,
-      time: data.verifiedBody.data.time,
-      post: data.verifiedBody.data.post,
+   data.users[0].books[bookIndex] = {
+      ...data.users[0].books[bookIndex],
+      ...data.verifiedBody.data,
    };
 
    try {
@@ -50,7 +46,7 @@ export async function DELETE(req: NextRequest) {
       return data;
    }
 
-   data.users[0].works = data.users[0].works.filter(
+   data.users[0].books = data.users[0].books.filter(
       (e) => e._id?.toString() !== id,
    );
 
