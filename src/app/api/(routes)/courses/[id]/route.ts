@@ -1,35 +1,29 @@
 import { adminAuth } from '@/app/api/auth/auth';
 import dbConnect from '@/app/api/utils/dbConnect';
 import { NextRequest, NextResponse as res } from 'next/server';
-import scheduleValidation from '../scheduleValidation';
+import courseValidation from '../courseValidation';
 
 export async function PUT(req: NextRequest) {
    await dbConnect();
 
    const id = req.nextUrl.pathname.split('/')[3];
 
-   const data = await adminAuth<typeof scheduleValidation>(
-      req,
-      scheduleValidation,
-   );
+   const data = await adminAuth<typeof courseValidation>(req, courseValidation);
 
    if (data instanceof res) {
       return data;
    }
 
-   const scheduleIndex = data.users[0].schedules.findIndex(
+   const courseIndex = data.users[0].courses.findIndex(
       (e) => e._id?.toString() === id,
    );
 
-   if (scheduleIndex === -1) {
-      return res.json(
-         { message: 'کار/کلاس مورد نظر یافت نشد!' },
-         { status: 404 },
-      );
+   if (courseIndex === -1) {
+      return res.json({ message: 'دوره مورد نظر یافت نشد!' }, { status: 404 });
    }
 
-   data.users[0].schedules[scheduleIndex] = {
-      ...data.users[0].schedules[scheduleIndex],
+   data.users[0].courses[courseIndex] = {
+      ...data.users[0].courses[courseIndex],
       ...data.verifiedBody.data,
    };
 
@@ -52,7 +46,7 @@ export async function DELETE(req: NextRequest) {
       return data;
    }
 
-   data.users[0].schedules = data.users[0].schedules.filter(
+   data.users[0].courses = data.users[0].courses?.filter(
       (e) => e._id?.toString() !== id,
    );
 

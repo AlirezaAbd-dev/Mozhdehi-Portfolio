@@ -1,6 +1,6 @@
 import mongoose, { InferSchemaType, Model } from 'mongoose';
 
-const courseSchema = new mongoose.Schema({
+const courseSchema = {
    _id: {
       type: mongoose.SchemaTypes.ObjectId,
       unique: true,
@@ -9,7 +9,7 @@ const courseSchema = new mongoose.Schema({
    name: { type: String, required: true },
    price: { type: Number, required: true },
    duration: { type: String, required: true },
-});
+};
 
 export const userSchema = new mongoose.Schema({
    username: { type: String, required: true },
