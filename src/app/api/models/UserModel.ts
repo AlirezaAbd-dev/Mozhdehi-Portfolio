@@ -90,7 +90,7 @@ export const userSchema = new mongoose.Schema({
          reference: { type: String, required: false },
       },
    ],
-   schedule: [
+   schedules: [
       {
          _id: {
             type: mongoose.SchemaTypes.ObjectId,
@@ -102,6 +102,7 @@ export const userSchema = new mongoose.Schema({
          place: { type: String, required: true },
       },
    ],
+
 });
 
 export type UserSchemaType = InferSchemaType<typeof userSchema>;

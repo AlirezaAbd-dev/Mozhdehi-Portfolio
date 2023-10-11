@@ -3,7 +3,7 @@ import { NextRequest, NextResponse as res } from 'next/server';
 import { adminAuth } from '../../auth/auth';
 import dbConnect from '../../utils/dbConnect';
 import UserModel from '../../models/UserModel';
-import bookValidation from './bookValidation';
+import scheduleValidation from './scheduleValidation';
 
 export async function GET() {
    await dbConnect();
@@ -17,21 +17,24 @@ export async function GET() {
       );
    }
 
-   const books = users.at(0)?.books;
+   const schedules = users.at(0)?.schedules;
 
-   return res.json({ books });
+   return res.json({ schedules });
 }
 
 export async function POST(req: NextRequest) {
    await dbConnect();
 
-   const data = await adminAuth<typeof bookValidation>(req, bookValidation);
+   const data = await adminAuth<typeof scheduleValidation>(
+      req,
+      scheduleValidation,
+   );
 
    if (data instanceof res) {
       return data;
    }
 
-   data.users.at(0)?.books.push({ ...data.verifiedBody.data });
+   data.users.at(0)?.schedules.push({ ...data.verifiedBody.data });
 
    try {
       await data.users.at(0)?.save();

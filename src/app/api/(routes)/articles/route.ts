@@ -17,9 +17,9 @@ export async function GET() {
       );
    }
 
-   const projects = users.at(0)?.projects;
+   const articles = users.at(0)?.articles;
 
-   return res.json({ projects });
+   return res.json({ articles });
 }
 
 export async function POST(req: NextRequest) {
