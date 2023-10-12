@@ -51,7 +51,7 @@ export async function POST(req: NextRequest) {
    );
 
    if (!selectedCourse) {
-      return res.json({ message: 'دوره مورد نظر یافت نشد!' });
+      return res.json({ message: 'دوره مورد نظر یافت نشد!' }, { status: 404 });
    }
 
    user?.orders.push({ ...verifiedBody.data, course: { ...selectedCourse } });

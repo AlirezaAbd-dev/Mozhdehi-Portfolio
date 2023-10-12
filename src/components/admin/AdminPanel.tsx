@@ -71,6 +71,13 @@ const AdminPanel = () => {
          <Divider sx={{ width: '100%' }} />
 
          <ProjectForm projects={data.projects} />
+
+         {/* Articles */}
+         {/* Books */}
+         {/* courses */}
+         {/* Schedules */}
+         {/* Works */}
+         {/* Orders */}
       </Card>
    );
 };
