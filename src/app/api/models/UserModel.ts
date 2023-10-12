@@ -123,7 +123,7 @@ export const userSchema = new mongoose.Schema({
          },
          name: { type: String, required: true },
          phone: { type: String, required: true },
-         age: { type: String, required: true },
+         age: { type: Number, required: true },
          freeTime: { type: String, required: true },
          course: { type: courseSchema, required: true },
       },
