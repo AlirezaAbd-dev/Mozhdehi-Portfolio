@@ -40,7 +40,7 @@ const SkillsModal = (props: SkillsModalProps) => {
 
          if (response.status === 200) {
             props.setSkillSelected(undefined);
-            alert('معرفی مورد نظر با موفقیت حذف شد');
+            alert('مهارت مورد نظر با موفقیت حذف شد');
          }
       }
    };

@@ -1,12 +1,19 @@
 'use client';
 
-import { ObjectId } from 'mongoose';
 import { ReactNode, useEffect } from 'react';
+import { ObjectId } from 'mongoose';
 import { create } from 'zustand';
 
 export type Store = {
    data: AllDataType | undefined;
    setAllData: (data: AllDataType | undefined) => void;
+};
+
+export type CardType = {
+   _id: string;
+   name: string;
+   image: string;
+   reference?: string;
 };
 
 export type AllDataType = {
@@ -24,11 +31,16 @@ export type AllDataType = {
       major: string;
       university: string;
    }[];
-   projects: {
+   projects: CardType[];
+   articles: CardType[];
+   books: CardType[];
+   works: { _id: string; company: string; time: string; post: string }[];
+   schedules: { _id: string; name: string; time: string; place: string }[];
+   courses: {
       _id: string;
       name: string;
-      image: string;
-      reference: string;
+      price: number;
+      duration: string;
    }[];
 };
 

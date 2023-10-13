@@ -2,13 +2,7 @@
 
 import * as React from 'react';
 import { useContext, useEffect } from 'react';
-import {
-   Box,
-   Card,
-   CircularProgress,
-   Divider,
-   Typography,
-} from '@mui/material';
+import { Box, Card, CircularProgress, Typography } from '@mui/material';
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 
@@ -20,6 +14,7 @@ import ProjectForm from './forms/ProjectForm';
 import MainContext from '@/context/index';
 import { useStore } from '@/store/store';
 import CustomTabPanel from './CustomTabPanel';
+import ArticleForm from './forms/ArticleForm';
 
 function a11yProps(index: number) {
    return {
@@ -161,7 +156,7 @@ const AdminPanel = () => {
                value={value}
                index={5}
             >
-               <ProjectForm projects={data.projects} />
+               <ArticleForm articles={data.articles} />
             </CustomTabPanel>
             <CustomTabPanel
                value={value}

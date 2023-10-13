@@ -1,4 +1,4 @@
-import { deleteProjectAction } from '@/actions/projectAction';
+import { deleteArticleAction } from '@/actions/articleActions';
 import {
    Box,
    Button,
@@ -9,12 +9,12 @@ import {
 import { useRouter } from 'next/navigation';
 import React, { useState } from 'react';
 
-type ProjectsModalProps = {
+type ArticlesModalProps = {
    deleteSelected: string | undefined;
    setDeleteSelected: (_id: string | undefined) => void;
 };
 
-const ProjectsModal = (props: ProjectsModalProps) => {
+const ArticlesModal = (props: ArticlesModalProps) => {
    const router = useRouter();
 
    const [loading, setLoading] = useState(false);
@@ -22,7 +22,7 @@ const ProjectsModal = (props: ProjectsModalProps) => {
    const deleteHandler = async () => {
       if (props.deleteSelected) {
          setLoading(true);
-         const response = await deleteProjectAction(
+         const response = await deleteArticleAction(
             localStorage.getItem('token')!,
             props.deleteSelected,
          );
@@ -40,7 +40,7 @@ const ProjectsModal = (props: ProjectsModalProps) => {
 
          if (response.status === 200) {
             props.setDeleteSelected(undefined);
-            alert('پروژه مورد نظر با موفقیت حذف شد');
+            alert('مقاله مورد نظر با موفقیت حذف شد');
          }
       }
    };
@@ -66,7 +66,7 @@ const ProjectsModal = (props: ProjectsModalProps) => {
             }}
          >
             <Typography variant='h6'>
-               آیا مایل به حذف این پروژه هستید؟
+               آیا مایل به حذف این مقاله هستید؟
             </Typography>
             <Box sx={{ display: 'flex', justifyContent: 'flex-start', mt: 3 }}>
                <Button
@@ -97,4 +97,4 @@ const ProjectsModal = (props: ProjectsModalProps) => {
    );
 };
 
-export default ProjectsModal;
+export default ArticlesModal;

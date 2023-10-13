@@ -17,7 +17,7 @@ export async function PUT(req: NextRequest) {
       return data;
    }
 
-   const articleIndex = data.users[0].books.findIndex(
+   const articleIndex = data.users[0].articles.findIndex(
       (e) => e._id?.toString() === id,
    );
 
