@@ -16,6 +16,7 @@ import { useStore } from '@/store/store';
 import CustomTabPanel from './CustomTabPanel';
 import ArticleForm from './forms/ArticleForm';
 import BookForm from './forms/BookForm';
+import CourseForm from './forms/CourseForm';
 
 function a11yProps(index: number) {
    return {
@@ -169,7 +170,7 @@ const AdminPanel = () => {
                value={value}
                index={7}
             >
-               <ProjectForm projects={data.projects} />
+               <CourseForm courses={data.courses} />
             </CustomTabPanel>
             <CustomTabPanel
                value={value}
