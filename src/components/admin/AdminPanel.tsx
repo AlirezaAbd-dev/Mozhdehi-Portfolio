@@ -15,6 +15,7 @@ import MainContext from '@/context/index';
 import { useStore } from '@/store/store';
 import CustomTabPanel from './CustomTabPanel';
 import ArticleForm from './forms/ArticleForm';
+import BookForm from './forms/BookForm';
 
 function a11yProps(index: number) {
    return {
@@ -162,7 +163,7 @@ const AdminPanel = () => {
                value={value}
                index={6}
             >
-               <ProjectForm projects={data.projects} />
+               <BookForm books={data.books} />
             </CustomTabPanel>
             <CustomTabPanel
                value={value}
