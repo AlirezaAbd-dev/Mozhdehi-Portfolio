@@ -3,63 +3,65 @@ import dbConnect from '../../utils/dbConnect';
 import UserModel from '../../models/UserModel';
 import { adminAuth } from '../../auth/auth';
 import orderValidation from './orderValidation';
+import { revalidateTag } from 'next/cache';
 
 export async function GET(req: NextRequest) {
-   await dbConnect();
+  await dbConnect();
 
-   const data = await adminAuth(req, null);
+  const data = await adminAuth(req, null);
 
-   if (data instanceof res) {
-      return data;
-   }
+  if (data instanceof res) {
+    return data;
+  }
 
-   if (!data.users.at(0)) {
-      return res.json(
-         { message: 'داده ای برای نمایش وجود ندارد!' },
-         { status: 404 },
-      );
-   }
+  if (!data.users.at(0)) {
+    return res.json(
+      { message: 'داده ای برای نمایش وجود ندارد!' },
+      { status: 404 },
+    );
+  }
 
-   const orders = data.users.at(0)?.orders;
+  const orders = data.users.at(0)?.orders;
 
-   return res.json({ orders });
+  return res.json({ orders });
 }
 
 export async function POST(req: NextRequest) {
-   const body = await req.json();
+  const body = await req.json();
 
-   const verifiedBody = orderValidation.safeParse(body);
+  const verifiedBody = orderValidation.safeParse(body);
 
-   if (!verifiedBody.success) {
-      return res.json(
-         { message: verifiedBody.error.errors[0].message },
-         { status: 400 },
-      );
-   }
+  if (!verifiedBody.success) {
+    return res.json(
+      { message: verifiedBody.error.errors[0].message },
+      { status: 400 },
+    );
+  }
 
-   const user = (await UserModel.find()).at(0);
+  const user = (await UserModel.find()).at(0);
 
-   if (!user) {
-      return res.json(
-         { message: 'داده ای برای نمایش وجود ندارد!' },
-         { status: 404 },
-      );
-   }
+  if (!user) {
+    return res.json(
+      { message: 'داده ای برای نمایش وجود ندارد!' },
+      { status: 404 },
+    );
+  }
 
-   const selectedCourse = user?.courses.find(
-      (c) => c._id?.toString() === verifiedBody.data.courseId,
-   );
+  const selectedCourse = user?.courses.find(
+    (c) => c._id?.toString() === verifiedBody.data.courseId,
+  );
 
-   if (!selectedCourse) {
-      return res.json({ message: 'دوره مورد نظر یافت نشد!' }, { status: 404 });
-   }
+  if (!selectedCourse) {
+    return res.json({ message: 'دوره مورد نظر یافت نشد!' }, { status: 404 });
+  }
 
-   user?.orders.push({ ...verifiedBody.data, course: { ...selectedCourse } });
+  user?.orders.push({ ...verifiedBody.data, course: { ...selectedCourse } });
 
-   try {
-      await user.save();
-      return res.json({ status: 'done' });
-   } catch (err: any) {
-      return res.json({ message: err.message }, { status: 500 });
-   }
+  try {
+    await user.save();
+    revalidateTag('orders');
+    return res.json({ status: 'done' });
+  } catch (err: any) {
+    return res.json({ message: err.message }, { status: 500 });
+  }
 }

@@ -19,6 +19,7 @@ import BookForm from './forms/BookForm';
 import CourseForm from './forms/CourseForm';
 import ScheduleForm from './forms/ScheduleForm';
 import WorkForm from './forms/WorkForm';
+import Orders from './tables/Orders';
 
 function a11yProps(index: number) {
   return {
@@ -190,7 +191,7 @@ const AdminPanel = () => {
           value={value}
           index={10}
         >
-          <ProjectForm projects={data.projects} />
+          <Orders />
         </CustomTabPanel>
       </Box>
     </Card>
