@@ -13,6 +13,11 @@ import { useState } from 'react';
 import { Course } from '../forms/CourseForm';
 import CoursesModal from '../modals/CoursesModal';
 
+const moneyFormatter = (price: number) => {
+   const mFormatter = Intl.NumberFormat('fa');
+   return mFormatter.format(price);
+};
+
 type CoursesProps = {
    courses: Course[];
    selectedItem?: Course;
@@ -49,7 +54,9 @@ export default function Courses(props: CoursesProps) {
                            }}
                         >
                            <TableCell align='center'>{c.name}</TableCell>
-                           <TableCell align='center'>{c.price} ریال</TableCell>
+                           <TableCell align='center'>
+                              {moneyFormatter(c.price)} ریال
+                           </TableCell>
                            <TableCell align='center'>{c.duration}</TableCell>
                            <TableCell align='center'>
                               <IconButton
