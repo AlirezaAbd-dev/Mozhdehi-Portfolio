@@ -111,7 +111,7 @@ const Orders = () => {
               </TableRow>
             </TableHead>
             <TableBody>
-              {orders?.map((o) => {
+              {orders.map((o) => {
                 return (
                   <TableRow
                     key={o.name}
